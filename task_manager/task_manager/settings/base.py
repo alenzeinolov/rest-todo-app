@@ -27,12 +27,14 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    "drf_spectacular",
     "rest_framework",
     "rest_framework.authtoken",
 ]
 
 LOCAL_APPS = [
     "accounts",
+    "core",
     "categories",
     "tasks",
 ]
@@ -90,6 +92,9 @@ CACHES = {
     }
 }
 
+# Sessions
+SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
+
 # Auth
 AUTH_USER_MODEL = "accounts.User"
 
@@ -126,11 +131,16 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Locale
+LOCALE_PATHS = [
+    ROOT_DIR / "locale",
+]
+
 # Static
 STATIC_URL = "/static/"
 
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
+    # BASE_DIR / "static",
 ]
 
 STATIC_ROOT = ROOT_DIR / "staticfiles"
@@ -148,6 +158,7 @@ EMAIL_TIMEOUT = 5
 
 # DRF
 REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_RENDERER_CLASSES": [
         "rest_framework.renderers.JSONRenderer",
     ],
@@ -161,4 +172,11 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAdminUser",
     ],
+}
+
+# Docs
+SPECTACULAR_SETTINGS = {
+    "TITLE": "REST Todo App",
+    "DESCRIPTION": "API for REST Todo App",
+    "VERSION": "1.0.0",
 }

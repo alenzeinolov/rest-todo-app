@@ -1,0 +1,41 @@
+version: "3"
+
+volumes:
+  postgres_data: {}
+  staticfiles: {}
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: ./compose/django/Dockerfile
+    volumes:
+      - staticfiles:/app/staticfiles
+    depends_on:
+      - postgres
+    expose:
+      - 8000
+    image: task_manager_django
+    env_file: ./.env
+    command: /start.sh
+  postgres:
+    build:
+      context: .
+      dockerfile: ./compose/postgres/Dockerfile
+    image: task_manager_postgres
+    volumes:
+      - postgres_data:/var/lib/postgersql/data
+    env_file: ./.env
+  nginx:
+    build:
+      context: .
+      dockerfile: ./compose/nginx/Dockerfile
+    depends_on:
+      - django
+    image: task_manager_nginx
+    volumes:
+      - staticfiles:/staticfiles
+    ports:
+      - "80:80"
+  redis:
+    image: redis:5
