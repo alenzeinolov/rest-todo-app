@@ -1,0 +1,4 @@
+-r ./base.txt
+
+black==21.5b1
+psycopg2-binary==2.8.6
