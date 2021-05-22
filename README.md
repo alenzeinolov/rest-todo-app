@@ -1,6 +1,6 @@
 # REST Todo App
 
-REST Todo App is an app design to keep track of every day tasks.
+REST Todo App is an app designed to keep track of every day tasks.
 
 ## Installation
 
